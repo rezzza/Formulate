@@ -35,7 +35,8 @@ echo $formula->render(); // "10 + 13"
 
 $formula = new Formula('{{ subformula1 }} + {{ variable2 }}');
 $formula->setToken($token);
-$formula->setSubFormula('subformula1', '({{ variable1 }} - {{ variable2 }} / 100)');
+$formula->setSubFormula(new Formula('subformula1', '({{ variable1 }} - {{ variable2 }} / 100)'));
+// you can add as many levels as you want
 
 echo $formula->render(); // (10 - 13 / 100) + 13
 ```
