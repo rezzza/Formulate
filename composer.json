@@ -10,7 +10,8 @@
         "homepage": "https://github.com/rezzza/Formulate/contributors"
     }],
     "require": {
-        "php": ">=5.3.2"
+        "php": ">=5.3.2",
+        "rezzza/exprlib": "1.0.*"
     },
     "require-dev": {
         "mageekguy/atoum": "master"
