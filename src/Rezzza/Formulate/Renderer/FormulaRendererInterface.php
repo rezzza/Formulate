@@ -3,6 +3,7 @@
 namespace Rezzza\Formulate\Renderer;
 
 use Rezzza\Formulate\Formula;
+use Rezzza\Formulate\TokenCollector\TokenCollectorInterface;
 
 /**
  * FormulaRendererInterface
@@ -13,11 +14,10 @@ use Rezzza\Formulate\Formula;
 interface FormulaRendererInterface
 {
     /**
-     * render the formula
-     *
-     * @param Token $token token
+     * @param Formula                 $formula        formula
+     * @param TokenCollectorInterface $tokenCollector tokenCollector
      *
      * @return string
      */
-    public function render(Formula $formula);
+    public function render(Formula $formula, TokenCollectorInterface $tokenCollector);
 }

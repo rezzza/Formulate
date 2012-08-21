@@ -19,24 +19,25 @@ php composer.phar update # or install
 ```php
 <?php
 
-use Rezzza\Formulate\Token;
 use Rezzza\Formulate\Formula;
-
-$token = new Token();
-$token->variable1 = "10";
-$token->variable2 = "13";
 
 $formula = new Formula('{{ variable1 }} + {{ variable2 }}');
 $formula->setToken($token);
+$formula->setParameter('variable1', 10);
+$formula->setParameter('variable2', 13);
 
 echo $formula->render(); // "10 + 13"
+
+$formula->setIsCalculable(true);
+
+echo $formula->render(); // "23"
 
 // Works with sub formulas
 
 $formula = new Formula('{{ subformula1 }} + {{ variable2 }}');
-$formula->setToken($token);
-$formula->setSubFormula(new Formula('subformula1', '({{ variable1 }} - {{ variable2 }} / 100)'));
-// you can add as many levels as you want
+$formula->setSubFormula('subformula1', new Formula('subformula1', '({{ variable1 }} - {{ variable2 }} / 100)'));
+$formula->setParameter('variable1', 10);
+$formula->setParameter('variable2', 13);
 
 echo $formula->render(); // (10 - 13 / 100) + 13
 ```
@@ -48,8 +49,6 @@ php composer install --dev
 bin/atoum -d tests/units
 ```
 
-## Wishlist
+## Todo
 
-- Look at libraries to parse and calculate results.
-- Add renderer (actually only strtr)
-
+- Add more tests

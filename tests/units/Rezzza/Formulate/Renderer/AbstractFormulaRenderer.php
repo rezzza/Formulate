@@ -16,18 +16,6 @@ use Rezzza\Formulate\Formula as Formula;
  */
 class AbstractFormulaRenderer extends atoum\test
 {
-    public function testException()
-    {
-        $formula  = new Formula('formula');
-        $renderer = $this->getRendererMock();
-
-        $this->exception(function () use ($renderer, $formula) {
-            $renderer->render($formula);
-        })
-            ->isInstanceOf('Rezzza\Formulate\Exception\RenderFormulaException')
-            ->hasMessage('Token is mandatory');
-    }
-
     public function testPrepare()
     {
         $formula = '{{ var}} {{var}}   {{  var             }}';

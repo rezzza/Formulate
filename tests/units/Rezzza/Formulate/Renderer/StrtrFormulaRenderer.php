@@ -19,46 +19,39 @@ class StrtrFormulaRenderer extends atoum\test
 {
     public function testSimple()
     {
-        $formula  = new Formula('formula');
-        $formula->setToken(new Token());
-        $renderer = new StrtrFormulaRendererModel();
+        $renderer       = new StrtrFormulaRendererModel();
+        $formula        = new Formula('formula');
 
-        $this->string($renderer->render($formula))
+        $this->string($renderer->render($formula, $formula->parse()))
             ->isEqualTo('formula');
     }
 
     public function testOneLevel()
     {
-        $token        = new Token();
-        $token->key   = "VIC";
-        $token->value = "MCKEY";
-
         $formula  = new Formula('{{key}} key {{value}} {{key}} {{anotherone}}');
-        $formula->setToken($token);
+        $formula->setParameter('key', 'VIC');
+        $formula->setParameter('value', 'MCKEY');
 
         $renderer = new StrtrFormulaRendererModel();
 
-        $this->string($renderer->render($formula))
+        $this->string($renderer->render($formula, $formula->parse()))
             ->isEqualTo('VIC key MCKEY VIC {{anotherone}}');
     }
 
     public function testMultiLevel()
     {
-        $token        = new Token();
-        $token->key   = "VIC";
-        $token->sf2   = "valuesf2";
-        $token->sf3   = "valuesf3";
-        $token->value = "MCKEY";
-
         $formula  = new Formula('{{key}} key {{subformula2}} {{subformula1}} {{subformula2}} {{anotherone}}');
         $formula->setSubFormula('subformula1', new Formula('{{key}} and {{sf3}}'));
         $formula->setSubFormula('subformula2', new Formula('{{sf2}}'));
         $formula->setSubFormula('subformula3', new Formula('UNUSED'));
-        $formula->setToken($token);
+        $formula->setParameter('key', 'VIC');
+        $formula->setParameter('value', 'MCKEY');
+        $formula->setParameter('sf2', 'valuesf2');
+        $formula->setParameter('sf3', 'valuesf3');
 
         $renderer = new StrtrFormulaRendererModel();
 
-        $this->string($renderer->render($formula))
+        $this->string($renderer->render($formula, $formula->parse()))
             ->isEqualTo('VIC key valuesf2 VIC and valuesf3 valuesf2 {{anotherone}}');
     }
 }

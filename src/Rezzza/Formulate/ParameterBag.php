@@ -3,11 +3,11 @@
 namespace Rezzza\Formulate;
 
 /**
- * Token
+ * ParameterBag
  *
  * @author Stephane PY <py.stephane1@gmail.com>
  */
-class Token
+class ParameterBag
 {
     public $datas = array();
 
@@ -15,11 +15,12 @@ class Token
      * @param string $key   key
      * @param mixed  $value value
      *
-     * @return Token
+     * @return ParameterBag
      */
-    public function __set($key, $value)
+    public function set($key, $value)
     {
         $this->datas[$key] = $value;
+
         return $this;
     }
 }

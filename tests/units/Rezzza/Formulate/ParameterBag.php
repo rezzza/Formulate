@@ -5,35 +5,35 @@ namespace tests\units\Rezzza\Formulate;
 require_once __DIR__ . '/../../../../vendor/autoload.php';
 
 use mageekguy\atoum;
-use Rezzza\Formulate\Token as TokenModel;
+use Rezzza\Formulate\ParameterBag as ParameterBagModel;
 
 /**
- * Token
+ * ParameterBag
  *
  * @uses atoum\test
  * @author Stephane PY <py.stephane1@gmail.com>
  */
-class Token extends atoum\test
+class ParameterBag extends atoum\test
 {
     public function testSetter()
     {
-        $token = new TokenModel();
+        $bag = new ParameterBagModel();
 
-        $this->array($token->datas)
+        $this->array($bag->datas)
             ->isEqualTo(array());
 
-        $token->foo = 'bar';
-        $token->jm  = 'squirrel';
+        $bag->set('foo', 'bar');
+        $bag->set('jm', 'squirrel');
 
-        $this->array($token->datas)
+        $this->array($bag->datas)
             ->isEqualTo(array(
                 'foo' => 'bar',
                 'jm'  => 'squirrel',
             ));
 
-        unset($token->datas['foo']);
+        unset($bag->datas['foo']);
 
-        $this->array($token->datas)
+        $this->array($bag->datas)
             ->isEqualTo(array(
                 'jm'  => 'squirrel',
             ));

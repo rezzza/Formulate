@@ -4,6 +4,10 @@ namespace Rezzza\Formulate;
 
 use Rezzza\Formulate\Renderer\FormulaRendererInterface;
 use Rezzza\Formulate\Renderer\StrtrFormulaRenderer;
+use Rezzza\Formulate\Parser\Parser;
+use Rezzza\Formulate\Parser\ParserInterface;
+use Rezzza\Formulate\TokenCollector\TokenCollector;
+use Rezzza\Formulate\TokenCollector\TokenCollectorInterface;
 
 /**
  * Formula
@@ -14,16 +18,21 @@ use Rezzza\Formulate\Renderer\StrtrFormulaRenderer;
 class Formula
 {
     public $formula;
+    private $isCalculable = false;
+    private $parameterBag;
+    private $parser;
     private $renderer;
-    private $token;
     private $subFormulas = array();
+    private $tokenCollector;
 
     /**
      * @param string $formula formula
      */
-    public function __construct($formula)
+    public function __construct($formula, $isCalculable = false)
     {
-        $this->formula = (string) $formula;
+        $this->formula      = (string) $formula;
+        $this->parameterBag = new ParameterBag();
+        $this->setIsCalculable($isCalculable);
     }
 
     /**
@@ -33,7 +42,20 @@ class Formula
      */
     public function render()
     {
-        return $this->renderer->render($this);
+        return $this->getRenderer()
+            ->render($this, $this->parse());
+    }
+
+    /**
+     * Parse formula and theses subforumlas
+     */
+    public function parse()
+    {
+        $parser = $this->getParser();
+        $parser->parse($this);
+
+        return $parser->getTokenCollector()
+            ->build($this->getRenderer());
     }
 
     /**
@@ -42,7 +64,7 @@ class Formula
      */
     public function setSubFormula($ident, Formula $formula)
     {
-        $this->subFormulas[(string) $ident] = $formula;
+        $this->subFormulas[$ident] = $formula;
     }
 
     /**
@@ -54,7 +76,15 @@ class Formula
     }
 
     /**
-     * @param FormulaRendererInterface $renderer renderer
+     * @return Formula
+     */
+    public function getSubFormula($key)
+    {
+        return $this->subFormulas[$key];
+    }
+
+    /**
+     * @param FormulaRendererInterface $renderer  renderer
      */
     public function setRenderer(FormulaRendererInterface $renderer)
     {
@@ -67,29 +97,87 @@ class Formula
     public function getRenderer()
     {
         if (null === $this->renderer) {
-            $this->renderer = new StrtrFormulaRenderer();
+            $this->setRenderer(new StrtrFormulaRenderer());
         }
 
         return $this->renderer;
     }
 
     /**
-     * @param Token $token token
+     * @param TokenCollectorInterface $tokenCollector tokenCollector
+     */
+    public function setTokenCollector(TokenCollectorInterface $tokenCollector)
+    {
+        $this->tokenCollector = $tokenCollector;
+    }
+
+    /**
+     * @return TokenCollector
+     */
+    public function getTokenCollector()
+    {
+        if (null === $this->tokenCollector) {
+            $this->setTokenCollector(new TokenCollector());
+        }
+
+        return $this->tokenCollector;
+    }
+
+    /**
+     * @param ParserInterface $parser parser
+     */
+    public function setParser(ParserInterface $parser)
+    {
+        $this->parser = $parser;
+    }
+
+    /**
+     * @return Parser
+     */
+    public function getParser()
+    {
+        if (null === $this->parser) {
+            $this->setParser(new Parser($this->getTokenCollector()));
+        }
+
+        return $this->parser;
+    }
+
+    /**
+     * @param string $key   key
+     * @param mixed $value value
      *
      * @return Formula
      */
-    public function setToken(Token $token)
+    public function setParameter($key, $value)
     {
-        $this->token = $token;
+        $this->parameterBag->set($key, $value);
 
         return $this;
     }
 
     /**
-     * @return Token
+     * @return ParameterBag
      */
-    public function getToken()
+    public function getParameterBag()
     {
-        return $this->token;
+        return $this->parameterBag;
     }
+
+    /**
+     * @param boolean $isCalculable isCalculable
+     */
+    public function setIsCalculable($isCalculable)
+    {
+        $this->isCalculable = (bool) $isCalculable;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isCalculable()
+    {
+        return $this->isCalculable;
+    }
+
 }

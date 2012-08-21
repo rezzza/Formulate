@@ -3,7 +3,9 @@
 namespace Rezzza\Formulate\Renderer;
 
 use Rezzza\Formulate\Formula;
+use Rezzza\Formulate\TokenCollector\TokenCollectorInterface;
 use Rezzza\Formulate\Exception\RenderFormulaException;
+use exprlib\Parser;
 
 /**
  * AbstractFormulaRenderer
@@ -23,25 +25,17 @@ abstract class AbstractFormulaRenderer implements FormulaRendererInterface
     /**
      * {@inheritdoc}
      */
-    public function render(Formula $formula)
+    public function render(Formula $formula, TokenCollectorInterface $tokenCollector)
     {
-        if (!$token = $formula->getToken()) {
-            throw new RenderFormulaException('Token is mandatory');
-        }
+		foreach ($formula->getSubFormulas() as $key => $subformula) {
+			$tokenCollector->set($key, $this->render($subformula, $tokenCollector));
+		}
 
-        $formulaString = $formula->formula;
+        $formulaString = $this->prepare($formula->formula);
 
-        $replacements = array();
-        foreach ($formula->getSubFormulas() as $key => $value) {
-            $replacements[$key] = $value->formula;
-        }
+        $formulaString = $this->replace($formulaString, $this->buildReplacements($tokenCollector->getGlobals()));
 
-        $formulaString = $this->prepare($formulaString);
-
-        $formulaString = $this->replace($formulaString, $this->buildReplacements($replacements));
-        $formulaString = $this->replace($formulaString, $this->buildReplacements($token->datas));
-
-        return $formulaString;
+		return $formula->isCalculable() ? (string) Parser::build($formulaString)->evaluate() : $formulaString;
     }
 
     /**
