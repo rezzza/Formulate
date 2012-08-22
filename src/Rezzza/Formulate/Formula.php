@@ -25,10 +25,13 @@ class Formula
     private $subFormulas = array();
     private $tokenCollector;
 
+    CONST CALCULABLE = true;
+    CONST NOT_CALCULABLE = false;
+
     /**
      * @param string $formula formula
      */
-    public function __construct($formula, $isCalculable = false)
+    public function __construct($formula, $isCalculable = self::NOT_CALCULABLE)
     {
         $this->formula      = (string) $formula;
         $this->parameterBag = new ParameterBag();
