@@ -61,8 +61,6 @@ abstract class AbstractFormulaRenderer implements FormulaRendererInterface
      */
     public function buildReplacements(array $replacements)
     {
-        $replacements = array_filter($replacements);
-
         $datas = array();
         foreach ($replacements as $key => $value) {
             $key = $this->getOption('separator_start').$key.$this->getOption('separator_end');
