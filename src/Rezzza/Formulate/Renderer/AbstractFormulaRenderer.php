@@ -10,7 +10,6 @@ use exprlib\Parser;
 from ('Hoa')
     ->import('Math.Evaluer.~');
 
-
 /**
  * AbstractFormulaRenderer
  *
