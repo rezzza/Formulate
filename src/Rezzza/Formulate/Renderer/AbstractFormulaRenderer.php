@@ -7,6 +7,10 @@ use Rezzza\Formulate\TokenCollector\TokenCollectorInterface;
 use Rezzza\Formulate\Exception\RenderFormulaException;
 use exprlib\Parser;
 
+from ('Hoa')
+    ->import('Math.Evaluer.~');
+
+
 /**
  * AbstractFormulaRenderer
  *
@@ -27,15 +31,20 @@ abstract class AbstractFormulaRenderer implements FormulaRendererInterface
      */
     public function render(Formula $formula, TokenCollectorInterface $tokenCollector)
     {
-		foreach ($formula->getSubFormulas() as $key => $subformula) {
-			$tokenCollector->set($key, $this->render($subformula, $tokenCollector));
-		}
+        foreach ($formula->getSubFormulas() as $key => $subformula) {
+            $tokenCollector->set($key, $this->render($subformula, $tokenCollector));
+        }
 
         $formulaString = $this->prepare($formula->formula);
 
         $formulaString = $this->replace($formulaString, $this->buildReplacements($tokenCollector->getGlobals()));
 
-		return $formula->isCalculable() ? (string) Parser::build($formulaString)->evaluate() : $formulaString;
+        if ($formula->isCalculable()) {
+            $evaluer       = new \Hoa\Math\Evaluer\Evaluer();
+            $formulaString = (string) $evaluer->evaluate($formulaString);
+        }
+
+        return $formulaString;
     }
 
     /**

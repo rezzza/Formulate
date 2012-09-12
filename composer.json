@@ -11,11 +11,35 @@
     }],
     "require": {
         "php": ">=5.3.2",
-        "rezzza/exprlib": "1.0.*"
+        "hoa/math"    : "master",
+        "hoa/core"    : "master",
+        "hoa/iterator": "master",
+        "hoa/compiler": "master"
     },
     "require-dev": {
         "mageekguy/atoum": "master"
     },
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "version": "master",
+                "name": "hoa/math",
+                "replace": {
+                    "hoa/math": "*"
+                },
+                "source": {
+                    "url": "https://github.com/rezzza/Math.git",
+                    "type": "git",
+                    "reference": "evaluer"
+                },
+                "dist": {
+                    "url": "https://github.com/rezzza/Math/zipball/master",
+                    "type": "zip"
+                }
+            }
+        }
+    ],
     "autoload":     {
         "psr-0": {
             "Rezzza\\Formulate": "src/"
