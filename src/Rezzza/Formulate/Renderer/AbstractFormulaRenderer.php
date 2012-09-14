@@ -3,12 +3,9 @@
 namespace Rezzza\Formulate\Renderer;
 
 use Rezzza\Formulate\Formula;
+use Rezzza\Formulate\Evaluer\Evaluer;
 use Rezzza\Formulate\TokenCollector\TokenCollectorInterface;
 use Rezzza\Formulate\Exception\RenderFormulaException;
-use exprlib\Parser;
-
-from ('Hoa')
-    ->import('Math.Evaluer.~');
 
 /**
  * AbstractFormulaRenderer
@@ -39,8 +36,7 @@ abstract class AbstractFormulaRenderer implements FormulaRendererInterface
         $formulaString = $this->replace($formulaString, $this->buildReplacements($tokenCollector->getGlobals()));
 
         if ($formula->isCalculable()) {
-            $evaluer       = new \Hoa\Math\Evaluer\Evaluer();
-            $formulaString = (string) $evaluer->evaluate($formulaString);
+            $formulaString = (string) Evaluer::getEvaluer()->evaluate($formulaString);
         }
 
         return $formulaString;
