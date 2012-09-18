@@ -36,7 +36,7 @@ abstract class AbstractFormulaRenderer implements FormulaRendererInterface
         $formulaString = $this->replace($formulaString, $this->buildReplacements($tokenCollector->getGlobals()));
 
         if ($formula->isCalculable()) {
-            $formulaString = (string) Evaluer::getEvaluer()->evaluate($formulaString);
+            $formulaString = (string) Evaluer::evaluate($formulaString);
         }
 
         return $formulaString;

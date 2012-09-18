@@ -9,19 +9,58 @@ namespace Rezzza\Formulate\Evaluer;
  */
 class Evaluer
 {
-    private static $evaluer;
+    /**
+     * @var \Hoa\Compiler\Llk
+     */
+    private static $compiler;
 
     /**
-     * @return \Hoa\Math\Evaluer\Evaluer
+     * @var \Hoa\Math\Visitor\Arithmetic
      */
-    static public function getEvaluer()
-    {
-        if (!self::$evaluer) {
-            from('Hoa')->import('Math.Evaluer.~');
+    private static $visitor;
 
-            static::$evaluer = new \Hoa\Math\Evaluer\Evaluer();
+    /**
+     * @return \Hoa\Compiler\Llk
+     */
+    static public function getCompiler()
+    {
+        if (!self::$compiler) {
+            from('Hoa')
+                ->import('Compiler.Llk')
+                ->import('File.Read')
+                ;
+
+            static::$compiler = \Hoa\Compiler\Llk::load(
+                new \Hoa\File\Read('hoa://Library/Math/Arithmetic/Grammar.pp')
+            );
         }
 
-        return static::$evaluer;
+        return static::$compiler;
+    }
+
+    /**
+     * @return \Hoa\Math\Visitor\Arithmetic
+     */
+    static public function getVisitor()
+    {
+        if (!self::$visitor) {
+            from('Hoa')
+                ->import('Math.Visitor.Arithmetic')
+                ;
+
+            static::$visitor = new \Hoa\Math\Visitor\Arithmetic();
+        }
+
+        return static::$visitor;
+    }
+
+    /**
+     * @param string $operation operation
+     *
+     * @return float
+     */
+    static public function evaluate($operation)
+    {
+        return self::getVisitor()->visit(self::getCompiler()->parse($operation));
     }
 }
