@@ -51,16 +51,28 @@ class Evaluer
     }
 
     /**
-     * @return \Hoa\Math\Evaluer\Evaluer
+     * @return \Hoa\Math\Visitor\Arithmetic
      */
-    static public function getEvaluer()
+    static public function getVisitor()
     {
-        if (!self::$evaluer) {
-            from('Hoa')->import('Math.Evaluer.~');
+        if (!self::$visitor) {
+            from('Hoa')
+                ->import('Math.Visitor.Arithmetic')
+                ;
 
-            static::$evaluer = new \Hoa\Math\Evaluer\Evaluer();
+            static::$visitor = new \Hoa\Math\Visitor\Arithmetic();
         }
 
-        return static::$evaluer;
+        return static::$visitor;
+    }
+
+    /**
+     * @param string $operation operation
+     *
+     * @return float
+     */
+    static public function evaluate($operation)
+    {
+        return self::getVisitor()->visit(self::getCompiler()->parse($operation));
     }
 }

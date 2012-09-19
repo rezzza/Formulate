@@ -1,16 +1,16 @@
 language: php
 
 php:
-  - 5.3
-  - 5.4
+    - 5.3
+    - 5.4
 
 before_script:
-  - curl -s http://getcomposer.org/installer | php
-  - COMPOSER_ROOT_VERSION=dev-master php composer.phar install --dev
+    - curl -s http://getcomposer.org/installer | php
+    - COMPOSER_ROOT_VERSION=dev-master php composer.phar install --dev
 
 script:
-  - bin/atoum -d tests/units
+    - bin/atoum -d tests/units
 
 notifications:
-  email:
-    - ci@verylastroom.com
+    email:
+        - ci@verylastroom.com
