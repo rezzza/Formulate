@@ -31,7 +31,7 @@ class Evaluer
                 ;
 
             static::$compiler = \Hoa\Compiler\Llk::load(
-                new \Hoa\File\Read('hoa://Library/Math/Arithmetic/Grammar.pp')
+                new \Hoa\File\Read('hoa://Library/Math/Arithmetic.pp')
             );
         }
 
