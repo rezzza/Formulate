@@ -31,12 +31,12 @@ class Evaluer
                 ;
 
             // cannot be used actually, issue with composer
-            //$grammar = 'hoa://Library/Math/Arithmetic/Grammar.pp';
-            $grammar = realpath(__DIR__.'/../../../../vendor/hoa/math/Arithmetic/Grammar.pp');
+            $grammar = 'hoa://Library/Math/Arithmetic/Grammar.pp';
+            /*$grammar = realpath(__DIR__.'/../../../../vendor/hoa/math/Arithmetic/Grammar.pp');
 
             if (!$grammar) {
                 throw new \Exception('Path to \Hoa\Math\Arithmetic\Grammar is corrupted');
-            }
+            }*/
 
             static::$compiler = \Hoa\Compiler\Llk::load(
                 new \Hoa\File\Read($grammar)
