@@ -22,7 +22,6 @@ php composer.phar update # or install
 use Rezzza\Formulate\Formula;
 
 $formula = new Formula('{{ variable1 }} + {{ variable2 }}');
-$formula->setToken($token);
 $formula->setParameter('variable1', 10);
 $formula->setParameter('variable2', 13);
 
@@ -41,6 +40,26 @@ $formula->setParameter('variable2', 13);
 
 echo $formula->render(); // (10 - 13 / 100) + 13
 ```
+
+## Mathematic operations
+
+Works as above + constant `Formula::CALCULABLE`, it'll use `Hoa\Math` arithmetic grammar to evaluate your operation. Example:
+
+```
+use Rezzza\Formulate\Formula;
+
+$formula = new Formula('{{ subformula1 }} + {{ variable2 }}');
+$formula->setSubFormula('subformula1', new Formula('(30 / 2) * -10', Formula::CALCULABLE));
+$formula->setParameter('variable2', '10');
+
+echo $formula->render(); // -150 + 10
+
+$formula->setIsCalculable(true);
+
+echo $formula->render(); // -140
+```
+
+Look at (Hoa Math repository)[https://github.com/hoaproject/Math].
 
 ## Tests
 
