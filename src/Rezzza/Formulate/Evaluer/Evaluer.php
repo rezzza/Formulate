@@ -30,16 +30,8 @@ class Evaluer
                 ->import('File.Read')
                 ;
 
-            // cannot be used actually, issue with composer
-            $grammar = 'hoa://Library/Math/Arithmetic/Grammar.pp';
-            /*$grammar = realpath(__DIR__.'/../../../../vendor/hoa/math/Arithmetic/Grammar.pp');
-
-            if (!$grammar) {
-                throw new \Exception('Path to \Hoa\Math\Arithmetic\Grammar is corrupted');
-            }*/
-
             static::$compiler = \Hoa\Compiler\Llk::load(
-                new \Hoa\File\Read($grammar)
+                new \Hoa\File\Read('hoa://Library/Math/Arithmetic/Grammar.pp')
             );
         }
 
