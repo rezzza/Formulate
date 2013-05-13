@@ -59,7 +59,7 @@ $formula->setIsCalculable(true);
 echo $formula->render(); // -140
 ```
 
-Look at ![Hoa Math repository](https://github.com/hoaproject/Math).
+Look at [Hoa Math repository](https://github.com/hoaproject/Math).
 
 ## Tests
 
