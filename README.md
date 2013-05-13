@@ -45,7 +45,7 @@ echo $formula->render(); // (10 - 13 / 100) + 13
 
 Works as above + constant `Formula::CALCULABLE`, it'll use `Hoa\Math` arithmetic grammar to evaluate your operation. Example:
 
-```
+```php
 use Rezzza\Formulate\Formula;
 
 $formula = new Formula('{{ subformula1 }} + {{ variable2 }}');
@@ -59,7 +59,7 @@ $formula->setIsCalculable(true);
 echo $formula->render(); // -140
 ```
 
-Look at (Hoa Math repository)[https://github.com/hoaproject/Math].
+Look at !(Hoa Math repository)[https://github.com/hoaproject/Math].
 
 ## Tests
 
