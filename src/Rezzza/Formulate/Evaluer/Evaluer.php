@@ -2,6 +2,10 @@
 
 namespace Rezzza\Formulate\Evaluer;
 
+use \Hoa\Compiler\Llk;
+use \Hoa\File\Read;
+use \Hoa\Math\Visitor\Arithmetic;
+
 /**
  * HoaMathEvaluer
  *
@@ -25,13 +29,8 @@ class Evaluer
     static public function getCompiler()
     {
         if (!self::$compiler) {
-            from('Hoa')
-                ->import('Compiler.Llk')
-                ->import('File.Read')
-                ;
-
-            static::$compiler = \Hoa\Compiler\Llk::load(
-                new \Hoa\File\Read('hoa://Library/Math/Arithmetic.pp')
+            static::$compiler = Llk::load(
+                new Read('hoa://Library/Math/Arithmetic.pp')
             );
         }
 
@@ -44,11 +43,7 @@ class Evaluer
     static public function getVisitor()
     {
         if (!self::$visitor) {
-            from('Hoa')
-                ->import('Math.Visitor.Arithmetic')
-                ;
-
-            static::$visitor = new \Hoa\Math\Visitor\Arithmetic();
+            static::$visitor = new Arithmetic();
         }
 
         return static::$visitor;
