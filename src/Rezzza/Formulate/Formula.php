@@ -107,6 +107,14 @@ class Formula
     }
 
     /**
+     * @return array
+     */
+    public function getReplacements()
+    {
+        return $this->getRenderer()->getReplacements($this);
+    }
+
+    /**
      * @param TokenCollectorInterface $tokenCollector tokenCollector
      */
     public function setTokenCollector(TokenCollectorInterface $tokenCollector)
