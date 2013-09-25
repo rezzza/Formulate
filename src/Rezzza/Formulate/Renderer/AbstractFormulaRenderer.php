@@ -86,7 +86,7 @@ abstract class AbstractFormulaRenderer implements FormulaRendererInterface
         $start = $this->getOption('separator_start');
         $end   = $this->getOption('separator_end');
 
-        if (preg_match_all('/'. $start . '(\S+)' . $end . '/', $this->prepare($formula->formula), $matches)) {
+        if (preg_match_all('/'. $start . '(.+?)' . $end . '/is', $this->prepare($formula->formula), $matches)) {
             $result = array_merge($result, $matches[1]);
         }
 
