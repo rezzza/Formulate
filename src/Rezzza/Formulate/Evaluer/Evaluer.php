@@ -2,7 +2,7 @@
 
 namespace Rezzza\Formulate\Evaluer;
 
-use \Hoa\Compiler\Llk;
+use \Hoa\Compiler\Llk\Llk;
 use \Hoa\File\Read;
 use \Hoa\Math\Visitor\Arithmetic;
 
@@ -14,17 +14,17 @@ use \Hoa\Math\Visitor\Arithmetic;
 class Evaluer
 {
     /**
-     * @var \Hoa\Compiler\Llk
+     * @var Llk
      */
     private static $compiler;
 
     /**
-     * @var \Hoa\Math\Visitor\Arithmetic
+     * @var Arithmetic
      */
     private static $visitor;
 
     /**
-     * @return \Hoa\Compiler\Llk
+     * @return Llk
      */
     static public function getCompiler()
     {
