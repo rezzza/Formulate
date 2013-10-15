@@ -5,7 +5,7 @@ Formulate - PHP
 
 Making life easier while writing complex math formulas, take a breath
 
-## Instalation - composer
+## Install via composer
 
 ```
 # composer.json
