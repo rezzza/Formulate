@@ -1,7 +1,7 @@
 Formulate - PHP
 ===============
 
-[![Build Status](https://secure.travis-ci.org/rezzza/Formulate.png)](http://travis-ci.org/rezzza/Formulate)
+[![Build Status](https://travis-ci.org/rezzza/Formulate.svg)](https://travis-ci.org/rezzza/Formulate)
 
 Making life easier while writing complex math formulas, take a breath
 
