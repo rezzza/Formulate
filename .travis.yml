@@ -1,15 +1,19 @@
 language: php
 
+dist: trusty
+sudo: false
+
 php:
     - 5.3
     - 5.4
+    - 5.6
+    - 7.0
 
 before_script:
-    - curl -s http://getcomposer.org/installer | php
-    - COMPOSER_ROOT_VERSION=dev-master php composer.phar install --dev
+    - composer install --optimize-autoloader --prefer-dist
 
 script:
-    - bin/atoum -d tests/units
+    - bin/atoum -ulr
 
 notifications:
     email:

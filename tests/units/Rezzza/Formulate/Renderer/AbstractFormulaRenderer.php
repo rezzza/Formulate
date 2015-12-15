@@ -22,7 +22,7 @@ class AbstractFormulaRenderer extends atoum\test
 
         $this->getRendererMock()->prepare($formula);
 
-        $this->string($formula)
+        $this->phpString($formula)
             ->isEqualTo('{{var}} {{var}}   {{var}}');
     }
 

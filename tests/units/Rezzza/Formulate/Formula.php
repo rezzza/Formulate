@@ -23,18 +23,18 @@ class Formula extends atoum\test
 		$formula->setSubFormula('sf', new FormulaModel('3*10', true));
 		$formula->setSubFormula('sf2', new FormulaModel('10-{{sf3}}', false));
 
-		$this->string($formula->render())
+		$this->phpString($formula->render())
 			->isEqualTo('2 + 1 + 30 - 10-{{sf3}}');
 
 		$formula->setSubFormula('sf3', new FormulaModel('5-3', true));
 		$formula->getSubFormula('sf2')->setIsCalculable(true);
 
-		$this->string($formula->render())
+		$this->phpString($formula->render())
 			->isEqualTo('2 + 1 + 30 - 2');
 
 		$formula->setIsCalculable(true);
 
-		$this->string($formula->render())
+		$this->phpString($formula->render())
 			->isEqualTo('31');
     }
 }

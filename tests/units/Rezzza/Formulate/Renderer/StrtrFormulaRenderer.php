@@ -22,7 +22,7 @@ class StrtrFormulaRenderer extends atoum\test
         $renderer       = new StrtrFormulaRendererModel();
         $formula        = new Formula('formula');
 
-        $this->string($renderer->render($formula, $formula->parse()))
+        $this->phpString($renderer->render($formula, $formula->parse()))
             ->isEqualTo('formula');
     }
 
@@ -34,7 +34,7 @@ class StrtrFormulaRenderer extends atoum\test
 
         $renderer = new StrtrFormulaRendererModel();
 
-        $this->string($renderer->render($formula, $formula->parse()))
+        $this->phpString($renderer->render($formula, $formula->parse()))
             ->isEqualTo('VIC key MCKEY VIC {{anotherone}}');
     }
 
@@ -51,7 +51,7 @@ class StrtrFormulaRenderer extends atoum\test
 
         $renderer = new StrtrFormulaRendererModel();
 
-        $this->string($renderer->render($formula, $formula->parse()))
+        $this->phpString($renderer->render($formula, $formula->parse()))
             ->isEqualTo('VIC key valuesf2 VIC and valuesf3 valuesf2 {{anotherone}}');
     }
 }
