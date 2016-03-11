@@ -34,7 +34,7 @@ echo $formula->render(); // "23"
 // Works with sub formulas
 
 $formula = new Formula('{{ subformula1 }} + {{ variable2 }}');
-$formula->setSubFormula('subformula1', new Formula('subformula1', '({{ variable1 }} - {{ variable2 }} / 100)'));
+$formula->setSubFormula('subformula1', new Formula('({{ variable1 }} - {{ variable2 }} / 100)'));
 $formula->setParameter('variable1', 10);
 $formula->setParameter('variable2', 13);
 
